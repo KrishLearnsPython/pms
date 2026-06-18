@@ -9,12 +9,10 @@ router = APIRouter()
 def register(payload: UserRegister):
     try:
         with get_db() as cur:
-            # Check if user already exists
             cur.execute("SELECT id FROM users WHERE email = %s", (payload.email,))
             if cur.fetchone():
                 raise HTTPException(status_code=400, detail="Email already registered")
             
-            # Hash password and insert user
             hashed = hash_password(payload.password)
             cur.execute(
                 "INSERT INTO users (email, password, role) VALUES (%s, %s, %s) RETURNING id",
@@ -22,7 +20,6 @@ def register(payload: UserRegister):
             )
             user_id = cur.fetchone()[0]
 
-            # If the user is a student, initialize student profile and link to college_id = 1 (MITADT UNIVERSITY)
             if payload.role == "student":
                 cur.execute(
                     "INSERT INTO student_profiles (user_id, college_id, status) VALUES (%s, 1, %s)",

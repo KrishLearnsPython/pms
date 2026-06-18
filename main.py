@@ -5,7 +5,6 @@ from routers import auth, colleges, students, attendance, assessments, drives, a
 
 app = FastAPI(title="Student Placement Management System API")
 
-# Add CORS Middleware
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -14,12 +13,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Initialize Database tables on Startup
 @app.on_event("startup")
 def startup():
     init_db()
 
-# Register Routers
 app.include_router(auth.router, tags=["Authentication"])
 app.include_router(colleges.router, prefix="/colleges", tags=["Colleges"])
 app.include_router(students.router, prefix="/students", tags=["Student Profiles"])

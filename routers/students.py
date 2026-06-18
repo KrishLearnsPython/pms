@@ -11,11 +11,9 @@ def update_student_profile(payload: StudentProfileUpdate, current_user: dict = D
     try:
         user_id = current_user["id"]
         with get_db() as cur:
-            # Build dynamic SQL update fields
             fields = []
             values = []
             
-            # Helper mapper
             update_map = {
                 "roll_number": payload.roll_number,
                 "college_id": payload.college_id,
@@ -36,7 +34,6 @@ def update_student_profile(payload: StudentProfileUpdate, current_user: dict = D
                 query = f"UPDATE student_profiles SET {', '.join(fields)} WHERE user_id = %s"
                 cur.execute(query, tuple(values))
 
-            # Fetch the updated profile details
             cur.execute("""
                 SELECT sp.user_id, u.email, sp.roll_number, sp.college_id, c.name, sp.branch, sp.gpa, sp.resume_url, sp.skills, sp.status
                 FROM student_profiles sp
