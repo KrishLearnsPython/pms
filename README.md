@@ -2,7 +2,7 @@
 
 A comprehensive FastAPI-based REST API for managing student placements, tracking attendance, assessments, and placement drives in educational institutions.
 
-**LINK**:https://pms-6in6.onrender.com
+**LINK**: https://pms-6in6.onrender.com
 
 ## Features
 
