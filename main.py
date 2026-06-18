@@ -17,6 +17,10 @@ app.add_middleware(
 def startup():
     init_db()
 
+@app.get("/", tags=["Root"])
+def read_root():
+    return {"message": "Welcome to PMS Backend"}
+
 app.include_router(auth.router, tags=["Authentication"])
 app.include_router(colleges.router, prefix="/colleges", tags=["Colleges"])
 app.include_router(students.router, prefix="/students", tags=["Student Profiles"])
